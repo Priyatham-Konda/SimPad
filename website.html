@@ -4,108 +4,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastPad - The Speed of Notepad, Power of VS Code</title>
+    <title>SimPad - Distraction-Free Note Taking</title>
+    <meta name="description"
+        content="A lightweight, warm-themed notepad for focus and simplicity. Supports code syntax highlighting and markdown checklists.">
     <style>
+        :root {
+            --bg-color: #F1E9D2;
+            --text-color: #2C241B;
+            --accent-color: #8B7E66;
+            --border-color: #D0C6B0;
+            --card-bg: #E8DEC7;
+            --hover-color: #5c5446;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        header {
+            text-align: center;
+            padding: 100px 0 60px;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 16px;
+            color: var(--text-color);
         }
 
         .tagline {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 40px;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-weight: 500;
         }
 
+        /* Buttons */
         .btn {
-            display: inline-block;
-            background-color: #007bff;
-            color: white;
-            padding: 15px 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            padding: 16px 32px;
+            border-radius: 12px;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 12px rgba(44, 36, 27, 0.15);
         }
 
         .btn:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(44, 36, 27, 0.2);
+            background-color: #1a1510;
         }
 
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            margin-left: 16px;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(44, 36, 27, 0.05);
+            border-color: var(--text-color);
+        }
+
+        .version-text {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            opacity: 0.8;
+        }
+
+        /* Warning Box */
         .warning-box {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            padding: 15px;
-            margin-top: 30px;
-            border-radius: 5px;
+            background-color: rgba(232, 222, 199, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 32px auto 0;
+            max-width: 500px;
+            font-size: 0.9rem;
+            text-align: left;
+            display: flex;
+            gap: 12px;
+        }
+
+        .warning-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 60px 0;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: var(--accent-color);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--accent-color);
             font-size: 0.9rem;
         }
 
-        code {
-            background: #eee;
-            padding: 2px 5px;
-            border-radius: 3px;
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
         }
 
-        .features {
-            margin-top: 50px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        footer a:hover {
+            text-decoration: underline;
         }
 
-        .feature {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 8px 0;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <h1>FastPad ⚡</h1>
-    <p class="tagline">The instant startup of Notepad. The coding power of VS Code.</p>
+    <div class="container">
+        <header>
+            <h1>SimPad</h1>
+            <p class="tagline">Focus on your ideas, not the interface.</p>
+            <p
+                style="margin: -25px auto 40px; color: var(--accent-color); font-size: 1.1rem; max-width: 600px; line-height: 1.5;">
+                The instant startup of Notepad. The coding power of VS Code.<br>
+                <span
+                    style="font-size: 0.85rem; font-weight: 700; opacity: 0.6; letter-spacing: 0.1em; text-transform: uppercase;">
+                    No AI • No Bloatware • No Ads • Free & Open Source
+                </span>
+            </p>
 
-    <a href="YOUR_GITHUB_RELEASE_LINK_HERE" class="btn">Download for Windows (x64)</a>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <a href="https://github.com/Priyatham-Konda/SimPad/releases/download/0.1.0/SimPad_0.1.0_x64-setup.exe"
+                    class="btn">
+                    <span>Download for Windows</span>
+                </a>
+                <a href="https://github.com/Priyatham-Konda/SimPad" class="btn btn-secondary">
+                    View on GitHub
+                </a>
+            </div>
 
-    <div class="warning-box">
-        <strong>⚠️ Windows SmartScreen Warning?</strong><br>
-        Since this is a new open-source app, Windows might say "Windows protected your PC".<br>
-        Click <strong>More Info</strong> &rarr; <strong>Run Anyway</strong> to install.
+            <p class="version-text">v0.1.0 • Windows x64 • Open Source</p>
+
+            <div class="warning-box">
+                <span class="warning-icon">⚠️</span>
+                <div>
+                    <strong>SmartScreen Warning?</strong><br>
+                    Click <em>More Info</em> &rarr; <em>Run Anyway</em> to install.<br>
+                    <span style="font-size: 0.8em; opacity: 0.8;">(Common for new open-source apps without expensive
+                        certificates)</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="features">
+            <div class="feature-card">
+                <span class="feature-icon">🚀</span>
+                <h3>Instant Launch</h3>
+                <p>Opens in under 0.5s. Optimized for speed with Tauri (Rust) backend. No loading screens.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📝</span>
+                <h3>Distraction Free</h3>
+                <p>Minimalist "Warm Paper" theme designed to reduce eye strain and keep you focused.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💻</span>
+                <h3>Code Ready</h3>
+                <p>Auto-detects code languages. Provides syntax highlighting for JS, Rust, Python, and more.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">✅</span>
+                <h3>Checklist Mode</h3>
+                <p>Turn any document into an interactive todo list with drag-and-drop support.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💾</span>
+                <h3>Smart Auto-Save</h3>
+                <p>Never lose work. Your content is saved instantly and persists across restarts.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⌨️</span>
+                <h3>Keyboard First</h3>
+                <p>Control everything with shortcuts. Tabs, modes, and search are just a keystroke away.</p>
+            </div>
+        </section>
     </div>
 
-    <div class="features">
-        <div class="feature">
-            <h3>🚀 Instant Launch</h3>
-            <p>Opens in under 0.5 seconds. No loading screens, no lag.</p>
+    <footer>
+        <div class="container">
+            <p>Built with ❤️ by <a href="https://github.com/Priyatham-Konda">Priyatham Konda</a> using Tauri & React.
+            </p>
+            <p style="margin-top: 8px;">MIT License • 2026</p>
         </div>
-        <div class="feature">
-            <h3>💻 Code Ready</h3>
-            <p>Auto-detects code. Syntax highlighting for JS, Python, Rust, and more.</p>
-        </div>
-        <div class="feature">
-            <h3>✅ Task Mode</h3>
-            <p>One click to turn lines into clickable checklists.</p>
-        </div>
-        <div class="feature">
-            <h3>💾 Auto-Save</h3>
-            <p>Never lose data. Closes instantly, reopens exactly where you left off.</p>
-        </div>
-    </div>
-
-    <p style="margin-top: 50px; font-size: 0.8rem; color: #888;">
-        Open Source and built with Tauri. <a href="https://github.com/YOUR_USERNAME/YOUR_REPO">View Source Code</a>
-    </p>
+    </footer>
 
 </body>
 
