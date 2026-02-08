@@ -6,6 +6,12 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SimPad</title>
+  <script>
+    // Redirect to website.html if hosted on GitHub Pages (not local dev)
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      window.location.replace('website.html');
+    }
+  </script>
 </head>
 
 <body>
