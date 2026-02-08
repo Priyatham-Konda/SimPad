@@ -7,6 +7,7 @@ import CodeEditor from './components/CodeEditor';
 import Checklist from './components/Checklist';
 import Modal from './components/Modal';
 import SettingsModal from './components/SettingsModal';
+import OnboardingModal from './components/OnboardingModal';
 import SearchToolbar from './components/SearchToolbar';
 import { useShortcuts } from './hooks/useShortcuts';
 import { AppDocument, DocumentType, ChecklistItem, ChecklistDocument } from './types';
@@ -47,6 +48,9 @@ function App() {
   // Search State
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // Onboarding State
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
   // Hidden file input for "Open"
   const fileInputRef = useRef<HTMLInputElement>(null);
   // Ref for Notepad to handle search
@@ -70,6 +74,14 @@ function App() {
   }
 
   // --- Persistence ---
+  useEffect(() => {
+    // Check Onboarding
+    const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+    if (!hasSeenOnboarding) {
+      setTimeout(() => setShowOnboarding(true), 500);
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('documents', JSON.stringify(documents));
   }, [documents]);
@@ -299,8 +311,18 @@ function App() {
     'f': () => setIsSearchOpen(true), // Ctrl+F
   });
 
+  const handleOnboardingClose = () => {
+    setShowOnboarding(false);
+    localStorage.setItem('hasSeenOnboarding', 'true');
+  };
+
   return (
     <div className="flex flex-col h-screen bg-[#F1E9D2] text-[#2C241B]">
+      <OnboardingModal
+        isOpen={showOnboarding}
+        onClose={handleOnboardingClose}
+      />
+
       <TitleBar
         documents={documents}
         activeDocId={activeDocId}

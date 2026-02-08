@@ -69,9 +69,30 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                         </div>
                     </div>
 
-                    {/* Future Settings Placeholders */}
-                    <div className="p-4 bg-[#E8DEC7]/50 rounded-lg border border-[#D0C6B0] text-sm text-[#8B7E66] text-center">
-                        More settings coming soon...
+                    {/* Future Settings Placeholders -> Now Changelog */}
+                    <div className="mt-8 border-t border-[#D0C6B0] pt-6">
+                        <h3 className="text-sm font-semibold text-[#2C241B] mb-4 uppercase tracking-wider">About SimPad</h3>
+
+                        <div className="space-y-4">
+                            <div className="bg-[#E8DEC7] p-3 rounded-lg border border-[#D0C6B0]">
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="font-bold text-[#2C241B]">v1.0.0</span>
+                                    <span className="text-xs text-[#8B7E66]">Initial Release</span>
+                                </div>
+                                <ul className="text-sm text-[#5c5446] space-y-1 list-disc list-inside">
+                                    <li>Native Notepad Experience</li>
+                                    <li>Modes: Text, Code, Checklist</li>
+                                    <li>Smart Auto-Save</li>
+                                    <li>Warm Paper Theme</li>
+                                    <li>Tabs & Keyboard Shortcuts</li>
+                                </ul>
+                            </div>
+                            {/* Future versions will go here */}
+                        </div>
+
+                        <div className="mt-6 text-center text-xs text-[#8B7E66] opacity-70">
+                            SimPad v0.1.0 • Built with Tauri
+                        </div>
                     </div>
                 </div>
 
