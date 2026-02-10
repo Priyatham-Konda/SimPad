@@ -36,11 +36,20 @@ jobs:
       - name: Install frontend dependencies
         run: npm install # Or 'yarn install' / 'pnpm install'
 
+      - name: Decode Private Key
+        run: |
+          if echo "${{ secrets.TAURI_PRIVATE_KEY }}" | base64 -d &>/dev/null; then
+             echo "${{ secrets.TAURI_PRIVATE_KEY }}" | base64 -d > private.key
+          else
+             echo "${{ secrets.TAURI_PRIVATE_KEY }}" > private.key
+          fi
+        shell: bash
+
       - name: Build and upload
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_PRIVATE_KEY: private.key
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           tagName: ${{ github.ref_name }}
