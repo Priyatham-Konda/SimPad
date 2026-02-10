@@ -36,25 +36,11 @@ jobs:
       - name: Install frontend dependencies
         run: npm install # Or 'yarn install' / 'pnpm install'
 
-      # - name: Decode Private Key
-      #   shell: bash
-      #   run: |
-      #     if echo "${{ secrets.TAURI_PRIVATE_KEY }}" | base64 -d &>/dev/null; then
-      #       echo "TAURI_PRIVATE_KEY<<EOF" >> $GITHUB_ENV
-      #       echo "${{ secrets.TAURI_PRIVATE_KEY }}" | base64 -d >> $GITHUB_ENV
-      #       echo "EOF" >> $GITHUB_ENV
-      #     else
-      #       echo "TAURI_PRIVATE_KEY<<EOF" >> $GITHUB_ENV
-      #       echo "${{ secrets.TAURI_PRIVATE_KEY }}" >> $GITHUB_ENV
-      #       echo "EOF" >> $GITHUB_ENV
-      #     fi
-
       - name: Build and upload
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # MAPPING: App expects "TAURI_SIGNING_PRIVATE_KEY", you give it "TAURI_PRIVATE_KEY" secret
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           tagName: ${{ github.ref_name }}
